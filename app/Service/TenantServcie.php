@@ -21,11 +21,13 @@ class TenantServcie
             throw ValidationException::withMessages(['field_name' => 'This value is incorrect']);
         }
         \DB::purge('system');
+        \DB::purge('tenant');
         \Config::set('database.connections.tenant.database' , $tenant->database);
 
         Self::$tenant = $tenant;
         Self::$domain = $tenant->domain;
         Self::$database = $tenant->database;
+        $databaseName = $tenant->database;
         \DB::connection('tenant')->reconnect();
         \DB::setDefaultConnection('tenant');
     }

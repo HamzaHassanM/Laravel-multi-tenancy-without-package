@@ -6,6 +6,7 @@ use App\Models\Tenant;
 use App\Service\TenantServcie;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\DB;
 
 class MigrateCommand extends Command
 {
@@ -21,7 +22,7 @@ class MigrateCommand extends Command
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Tenants migration';
 
     /**
      * Execute the console command.
@@ -34,7 +35,10 @@ class MigrateCommand extends Command
         $tenants = Tenant::get();
         $tenants->each(function ($tenant){
             TenantServcie::switchToTenant($tenant);
-
+            $this->info('Start migrating : '.$tenant->domain);
+            $this->info('---------------------------------------');
+            Artisan::call('migrate --path=database/migrations/tenants/  --database=tenant');
+            $this->info(Artisan::output());
         });
         return Command::SUCCESS;
     }
