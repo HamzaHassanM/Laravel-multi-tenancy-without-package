@@ -19,6 +19,10 @@ class TenantsMiddleware
     public function handle(Request $request, Closure $next)
     {
         $host = $request->getHost();
+
+        if($host == TenantServcie::getTenant()){
+            dd('eq');
+        }
         $tenant = Tenant::where('domain',$host)->first();
         TenantServcie::switchToTenant($tenant);
         return $next($request);
