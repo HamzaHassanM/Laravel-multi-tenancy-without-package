@@ -20,7 +20,7 @@ class TenantServcie
             // throw error or tenant class 
             throw ValidationException::withMessages(['field_name' => 'This value is incorrect']);
         }
-        \DB::purge('system');
+        \DB::purge('landlord');
         \DB::purge('tenant');
         \Config::set('database.connections.tenant.database' , $tenant->database);
 
@@ -34,10 +34,10 @@ class TenantServcie
 
     public static function switchToDefault()
     {
-        \DB::purge('system');
+        \DB::purge('landlord');
         \DB::purge('tenant');
-        \DB::connection('system')->reconnect();
-        \DB::setDefaultConnection('system');
+        \DB::connection('landlord')->reconnect();
+        \DB::setDefaultConnection('landlord');
     }
 
 
