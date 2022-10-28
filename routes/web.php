@@ -16,5 +16,6 @@ use App\Http\Controllers\HomePageController;
 */
 
 Route::get('/', [HomePageController::class  , 'index']);
+Auth::routes();
 
-
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
