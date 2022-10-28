@@ -1,18 +1,18 @@
 <?php
 
-namespace App\Console\Commands;
+namespace App\Console\Commands\Landlord;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Artisan;
 
-class SystemMigrateCommand extends Command
+class SeederCommand extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'system:migrate';
+    protected $signature = 'landlord:seed {class}';
 
     /**
      * The console command description.
@@ -28,9 +28,11 @@ class SystemMigrateCommand extends Command
      */
     public function handle()
     {
-        $this->info('Start migrating LandLord SYSTEM');
-        $this->info('---------------------------------------');
-        Artisan::call('migrate --path=database/migrations/system/  --database=landlord');
+        $class = $this->argument('class');
+        Artisan::call('db:seed' , [
+            '--class' => 'Database\\Seeders\\Landlord\\'.$class,
+            '--database' => 'landlord'
+        ]);
         $this->info(Artisan::output());
         return Command::SUCCESS;
     }
