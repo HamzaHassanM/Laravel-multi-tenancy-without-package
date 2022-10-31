@@ -5,6 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 use App\Models\Tenant;
+use App\Service\Tenants;
 use App\Service\TenantServcie;
 
 class TenantsMiddleware
@@ -20,11 +21,11 @@ class TenantsMiddleware
     {
         $host = $request->getHost();
 
-        if($host == TenantServcie::getTenant()){
+        if($host == Tenants::getTenant()){
             dd('eq');
         }
         $tenant = Tenant::where('domain',$host)->first();
-        TenantServcie::switchToTenant($tenant);
+        Tenants::switchToTenant($tenant);
         return $next($request);
     }
 }
