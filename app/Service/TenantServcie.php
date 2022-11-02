@@ -10,11 +10,11 @@ use Symfony\Component\CssSelector\Exception\ParseException;
 class TenantServcie
 {
 
-    private static $tenant;
-    private static$domain;
-    private static $database;
+    private  $tenant;
+    private $domain;
+    private  $database;
 
-    public static function switchToTenant(Tenant $tenant)
+    public  function switchToTenant(Tenant $tenant)
     {
         if(!$tenant instanceof Tenant){
             // throw error or tenant class 
@@ -24,15 +24,14 @@ class TenantServcie
         \DB::purge('tenant');
         \Config::set('database.connections.tenant.database' , $tenant->database);
 
-        Self::$tenant = $tenant;
-        Self::$domain = $tenant->domain;
-        Self::$database = $tenant->database;
-        $databaseName = $tenant->database;
+        $this->tenant = $tenant;
+        $this->domain = $tenant->domain;
+        $this->database = $tenant->database;
         \DB::connection('tenant')->reconnect();
         \DB::setDefaultConnection('tenant');
     }
 
-    public static function switchToDefault()
+    public  function switchToDefault()
     {
         \DB::purge('landlord');
         \DB::purge('tenant');
@@ -41,8 +40,8 @@ class TenantServcie
     }
 
 
-    public static function getTenant(){
-        return Self::$tenant;
+    public  function getTenant(){
+        return $this->tenant;
     }
 
 }

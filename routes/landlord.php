@@ -1,7 +1,7 @@
 <?php
 
-use App\Facade\Tenants;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/index' , function(){
-    dd(Tenants::getTenant());
+Route::get('/landlord/index' , function(){
+    dd(DB::getDefaultConnection());
         return 1;
 });
