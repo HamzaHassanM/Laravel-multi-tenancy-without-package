@@ -23,7 +23,6 @@ class TenantServcie
         \DB::purge('landlord');
         \DB::purge('tenant');
         \Config::set('database.connections.tenant.database' , $tenant->database);
-
         $this->tenant = $tenant;
         $this->domain = $tenant->domain;
         $this->database = $tenant->database;
