@@ -3,7 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\HomePageController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -15,26 +15,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function (Request $request) {
+Route::get('/', [HomePageController::class  , 'index']);
+Auth::routes();
 
-
-
-
-    dd(DB::table('categories')->get()->toArray());
-
-    return view('welcome' , compact('host'));
-});
-
-
-
-
-Route::get('/admin', function (Request $request) {
-
-dd(DB::getConnections());
-
-
-    dd(DB::table('categories')->get()->toArray());
-
-    return view('welcome' , compact('host'));
-});
-
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
